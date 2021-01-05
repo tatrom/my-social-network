@@ -1,0 +1,9 @@
+
+.dialogItem {
+    color: #fff;
+    text-decoration: none;
+}
+
+.active {
+    color: gold;
+}
