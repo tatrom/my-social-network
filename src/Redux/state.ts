@@ -1,4 +1,7 @@
-import {EntireTreeRender} from "../render";
+let EntireTreeRender  = () => {
+
+}
+
 
 type PostType = {
     id: number
@@ -29,6 +32,7 @@ type DialogPageType = {
 
 type ProfilePageType = {
     posts: Array<PostType>
+    newText: string
 }
 
 type UsersType = {
@@ -62,7 +66,9 @@ export const state: StateType = {
             {id: 3, message: "Its a third post", likes: 3},
             {id: 4, message: "Its a fourth post", likes: 3},
             {id: 5, message: "Its a fifth post", likes: 3},
-        ]
+        ],
+        newText: ""
+
     },
     Users: {
         users: [
@@ -75,12 +81,25 @@ export const state: StateType = {
 
 }
 
-export let addPost = (postMessage: string) => {
-    let newPost: PostType = {
-        id: 1,
-        message:postMessage,
-        likes: 5
+export let addPost = () => {
+    let text = state.ProfilePage.newText.trim()
+    if ( text ) {
+        let newPost: PostType = {
+            id: 1,
+            message: text,
+            likes: 5
+        }
+        state.ProfilePage.posts.push(newPost);
+        state.ProfilePage.newText = '';
+        EntireTreeRender();
     }
-    state.ProfilePage.posts.push(newPost);
-    EntireTreeRender(state);
+}
+
+export let updateNewPostText = (newText: string) => {
+    state.ProfilePage.newText = newText;
+    EntireTreeRender()
+}
+
+export const subscribe = (callback: () => void ) => {
+    EntireTreeRender = callback;
 }

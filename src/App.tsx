@@ -36,6 +36,7 @@ type DialogPageType = {
 
 type ProfilePageType = {
     posts: Array<PostType>
+    newText: string
 }
 
 type UsersType = {
@@ -49,7 +50,8 @@ type AppPropsType = {
         ProfilePage: ProfilePageType
         Users: UsersType
     }
-    addPost: (postMessage: string) => void
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
 }
 
 function App(props: AppPropsType) {
@@ -60,7 +62,7 @@ function App(props: AppPropsType) {
             <Header/>
             <Navbar users={props.state.Users.users}/>
             <div className={"App_content"}>
-                <Route path="/profile" render={() => <Profile posts={props.state.ProfilePage.posts} addPost={props.addPost}/>}/>
+                <Route path="/profile" render={() => <Profile posts={props.state.ProfilePage.posts} addPost={props.addPost} updateNewPostText={props.updateNewPostText} newPostText={props.state.ProfilePage.newText}/>}/>
                 <Route path="/dialogs"render={() => <Dialogs dialogs={props.state.DialogPage.dialogs} messages={props.state.DialogPage.messages}/>}/>
                 <Route path="/news"/>
                 <Route path="/music"/>
