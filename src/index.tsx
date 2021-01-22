@@ -4,12 +4,13 @@ import reportWebVitals from './reportWebVitals';
 import {store} from './Redux/state'
 import ReactDOM from "react-dom";
 import React from "react";
+import {BrowserRouter} from "react-router-dom";
 
 function EntireTreeRender() {
     ReactDOM.render(
-        <React.StrictMode>
+        <BrowserRouter>
             <App store={store}/>
-        </React.StrictMode>,
+        </BrowserRouter>,
         document.getElementById('root')
     );
 }

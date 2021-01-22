@@ -1,7 +1,7 @@
-import React, {ChangeEvent} from 'react';
+import React, {KeyboardEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
-import {log} from "util";
+import {ActionTypes, addPostActionCreator, updateNewPostTextActionCreator} from "../../../Redux/state";
 
 type PostType = {
     id: number
@@ -11,32 +11,33 @@ type PostType = {
 
 type MyPostType = {
     posts: Array<PostType>
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionTypes) => void
     newPostText: string
 }
+
+
 export const MyPosts = (props: MyPostType) => {
     let posts = props.posts.map( (el) => <Post id={el.id} message={el.message} likes={el.likes} />)
     let newTextAreaElement = React.createRef<HTMLTextAreaElement>()
 
     function addPost() {
-
-            props.addPost()
+        props.dispatch(addPostActionCreator())
     }
 
     const UpdateText = () => {
         let text = newTextAreaElement.current?.value
         if ( text !== undefined ) {
-        props.updateNewPostText(text)
+        props.dispatch(updateNewPostTextActionCreator(text))
         }
     }
 
-    let OnKeyPressHandler = (e: number) => {
-        e === 13 && props.addPost()
+    let OnKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement> ) => {
+        e.key === "Enter" && props.dispatch(addPostActionCreator())
+        console.log(e.key)
     }
     return (
         <div className={s.mypost}>
-            <textarea ref={newTextAreaElement}  value={props.newPostText} onChange={UpdateText} onKeyPress={ (e) => OnKeyPressHandler(e.charCode)}/>
+            <textarea ref={newTextAreaElement}  value={props.newPostText} onChange={UpdateText} onKeyPress={ (e) => OnKeyPressHandler(e)}/>
             <button className={s.button} onClick={addPost}>Add post</button>
             <div className={s.posts}>
                 {posts}

@@ -1,11 +1,42 @@
 export type StoreType = {
     _state: StateType
-    updateNewPostText: (newText: string) => void
-    addPost: () => void
     _callSubscriber: () => void
     subscribe: (callback: () => void) => void
     getState: () => StateType
+    dispatch: (action: ActionTypes) => void
 }
+
+type AddPostActionType = {
+    type: "ADD-POST"
+}
+type ChangeNewTextActionType = {
+    type: "UPDATE-NEW-POST-TEXT",
+    newText: string
+}
+type UpdateNewMessageBodyType = {
+    type: "UPDATE-NEW-MESSAGE-BODY",
+    body: string
+}
+type SendMessageType = {
+    type: "SEND-MESSAGE"
+}
+
+
+export type ActionTypes = AddPostActionType | ChangeNewTextActionType | UpdateNewMessageBodyType | SendMessageType
+
+const ADD_POST = 'ADD-POST';
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY";
+const SEND_MESSAGE = "SEND-MESSAGE";
+
+export const addPostActionCreator = (): ActionTypes => ({type: ADD_POST})
+export const updateNewPostTextActionCreator = (newText: string): ActionTypes => ({
+    type: UPDATE_NEW_POST_TEXT,
+    newText: newText
+})
+export const sendMessageCreator = (): ActionTypes => ({type: SEND_MESSAGE})
+export const updateNewMessageBodyCreator = (text: string): ActionTypes => ({type: UPDATE_NEW_MESSAGE_BODY, body: text})
+
 export const store: StoreType = {
     _state: {
         DialogPage: {
@@ -20,7 +51,8 @@ export const store: StoreType = {
                 {id: 1, name: "Roman"},
                 {id: 1, name: "Renat"},
                 {id: 1, name: "Anatoly"}
-            ]
+            ],
+            newMessageBody: ""
         },
         ProfilePage: {
             posts: [
@@ -43,23 +75,6 @@ export const store: StoreType = {
         }
 
     },
-    updateNewPostText(newText: string) {
-        this._state.ProfilePage.newText = newText;
-        this._callSubscriber()
-    },
-    addPost() {
-        let text = this._state.ProfilePage.newText.trim()
-        if (text) {
-            let newPost: PostType = {
-                id: 1,
-                message: text,
-                likes: 5
-            }
-            this._state.ProfilePage.posts.push(newPost);
-            this._state.ProfilePage.newText = '';
-            this._callSubscriber();
-        }
-    },
     _callSubscriber() {
 
     },
@@ -68,6 +83,32 @@ export const store: StoreType = {
     },
     getState() {
         return this._state
+    },
+    dispatch(action) {
+        if (action.type === ADD_POST) {
+            let text = this._state.ProfilePage.newText.trim()
+            if (text) {
+                let newPost: PostType = {
+                    id: 1,
+                    message: text,
+                    likes: 5
+                }
+                this._state.ProfilePage.posts.push(newPost);
+                this._state.ProfilePage.newText = '';
+                this._callSubscriber();
+            }
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
+            this._state.ProfilePage.newText = action.newText;
+            this._callSubscriber()
+        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
+            this._state.DialogPage.newMessageBody = action.body;
+            this._callSubscriber()
+        } else if (action.type === SEND_MESSAGE) {
+            let body = this._state.DialogPage.newMessageBody;
+            this._state.DialogPage.newMessageBody = '';
+            this._state.DialogPage.messages.push({id: 6, message: body})
+            this._callSubscriber()
+        }
     }
 }
 
@@ -93,9 +134,10 @@ type UserType = {
     name: string
     date: number
 }
-type DialogPageType = {
+export type DialogPageType = {
     messages: Array<MessagesType>
     dialogs: Array<DialogsType>
+    newMessageBody: string
 }
 
 type ProfilePageType = {
