@@ -5,6 +5,7 @@ import {Navbar} from "./Components/Navbar/Navbar";
 import {Profile} from "./Components/Profile/Profile";
 import {Dialogs} from "./Components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from 'react-router-dom';
+import {StateType, StoreType} from "./Redux/state";
 
 
 type PostType = {
@@ -45,25 +46,19 @@ type UsersType = {
 
 
 type AppPropsType = {
-    state: {
-        DialogPage: DialogPageType
-        ProfilePage: ProfilePageType
-        Users: UsersType
-    }
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+  store:StoreType;
 }
 
 function App(props: AppPropsType) {
-
+    const state = props.store.getState();
     return (
         <BrowserRouter>
         <div className="App">
             <Header/>
-            <Navbar users={props.state.Users.users}/>
+            <Navbar users={state.Users.users}/>
             <div className={"App_content"}>
-                <Route path="/profile" render={() => <Profile posts={props.state.ProfilePage.posts} addPost={props.addPost} updateNewPostText={props.updateNewPostText} newPostText={props.state.ProfilePage.newText}/>}/>
-                <Route path="/dialogs"render={() => <Dialogs dialogs={props.state.DialogPage.dialogs} messages={props.state.DialogPage.messages}/>}/>
+                <Route path="/profile" render={() => <Profile posts={state.ProfilePage.posts} addPost={props.store.addPost.bind(props.store)} updateNewPostText={props.store.updateNewPostText.bind(props.store)} newPostText={state.ProfilePage.newText}/>}/>
+                <Route path="/dialogs"render={() => <Dialogs dialogs={state.DialogPage.dialogs} messages={state.DialogPage.messages}/>}/>
                 <Route path="/news"/>
                 <Route path="/music"/>
                 <Route path="/settings"/>
