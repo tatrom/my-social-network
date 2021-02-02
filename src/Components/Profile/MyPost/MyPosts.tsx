@@ -1,7 +1,6 @@
 import React, {KeyboardEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from "./Post/Post";
-import {ActionTypes, addPostActionCreator, updateNewPostTextActionCreator} from "../../../Redux/state";
 
 type PostType = {
     id: number
@@ -11,7 +10,8 @@ type PostType = {
 
 type MyPostType = {
     posts: Array<PostType>
-    dispatch: (action: ActionTypes) => void
+    addPost: () => void
+    updateText: (text: string) => void
     newPostText: string
 }
 
@@ -21,19 +21,16 @@ export const MyPosts = (props: MyPostType) => {
     let newTextAreaElement = React.createRef<HTMLTextAreaElement>()
 
     function addPost() {
-        props.dispatch(addPostActionCreator())
+        props.addPost()
     }
-
     const UpdateText = () => {
         let text = newTextAreaElement.current?.value
         if ( text !== undefined ) {
-        props.dispatch(updateNewPostTextActionCreator(text))
+        props.updateText(text)
         }
     }
-
     let OnKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement> ) => {
-        e.key === "Enter" && props.dispatch(addPostActionCreator())
-        console.log(e.key)
+        e.key === "Enter" && props.addPost()
     }
     return (
         <div className={s.mypost}>

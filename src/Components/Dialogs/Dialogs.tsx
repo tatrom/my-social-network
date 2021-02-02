@@ -2,13 +2,13 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogsItem/DialogsItem';
 import {Message} from "./Message/Message";
-import {ActionTypes, DialogPageType, sendMessageCreator, updateNewMessageBodyCreator} from "../../Redux/state";
+import {DialogPageType} from "../../Redux/state";
 
 
 type DialogsType = {
     dialogPage: DialogPageType
-    dispatch: (action: ActionTypes) => void
-
+    sendMessage: () => void
+    newMessageChange: (newMessage: string) => void
 }
 export const Dialogs = (props: DialogsType) => {
 
@@ -17,16 +17,17 @@ export const Dialogs = (props: DialogsType) => {
     let newMessageBody = props.dialogPage.newMessageBody;
 
     let onSendMessageClick = () => {
-        props.dispatch(sendMessageCreator());
+        props.sendMessage();
     }
     let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        debugger;
         let body = e.target.value;
-        props.dispatch(updateNewMessageBodyCreator(body))
+        props.newMessageChange(body)
 
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter")
-            props.dispatch(sendMessageCreator())
+            props.sendMessage()
     }
     return (
         <div className={s.dialogs}>
