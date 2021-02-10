@@ -116,15 +116,15 @@ export type MessagesType = {
 }
 
 export type UserType = {
+    name: string
     id: number
-    followed: boolean
-    fullName: string
-    status: string
-    location: {
-        city: string
-        country: string
-    }
-    photo: string
+    uniqueUrlName: string|null,
+    photos: {
+        small: string|null
+        large: string|null
+    },
+    status: string|null
+    "followed": boolean
 }
 
 export type DialogPageType = {

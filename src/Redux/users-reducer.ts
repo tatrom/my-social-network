@@ -5,42 +5,7 @@ const UNFOLLOW = "UNFOLLOW"
 const SET_USERS = "SET_USERS"
 
 let initialState = {
-    users: [
-        {
-            id: 1,
-            followed: false,
-            fullName: "Roman",
-            status: "React developer",
-            location: {
-                city: "Kiev",
-                country: "Ukraine"
-            },
-            photo: "https://www.thebalancecareers.com/thmb/BOjyOw3eW7uaNyBaz6vo3ozM4Mg=/300x200/filters:no_upscale():max_bytes(150000):strip_icc():saturation(0.2):brightness(10):contrast(5)/GettyImages-746096729-5bf437b0c9e77c005126418a.jpg"
-        },
-        {
-            id: 2,
-            followed: true,
-            fullName: "Anna ",
-            status: "office manager",
-            location: {
-                city: "Kiev",
-                country: "Ukraine"
-            },
-            photo: "https://www.thebalancecareers.com/thmb/BOjyOw3eW7uaNyBaz6vo3ozM4Mg=/300x200/filters:no_upscale():max_bytes(150000):strip_icc():saturation(0.2):brightness(10):contrast(5)/GettyImages-746096729-5bf437b0c9e77c005126418a.jpg"
-        },
-        {
-            id: 3,
-            followed: false,
-            fullName: "Renat ",
-            status: "student",
-            location: {
-                city: "Kiev",
-                country: "Ukraine"
-            },
-            photo: "https://www.thebalancecareers.com/thmb/BOjyOw3eW7uaNyBaz6vo3ozM4Mg=/300x200/filters:no_upscale():max_bytes(150000):strip_icc():saturation(0.2):brightness(10):contrast(5)/GettyImages-746096729-5bf437b0c9e77c005126418a.jpg"
-
-        },
-    ]
+    users: []
 }
 
 const usersReducer = (state: UsersType = initialState, action: ActionTypes) => {
