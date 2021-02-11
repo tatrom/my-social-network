@@ -10,7 +10,7 @@ import {UserContainer} from "./Components/Users/UsersContainer";
 
 function App() {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <div className="App">
 
                 <Header/>
@@ -27,7 +27,7 @@ function App() {
                     </Switch>
                 </div>
             </div>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 
