@@ -33,6 +33,16 @@ type SetUsersType = {
     users: Array<UserType>
 }
 
+type SetCurrentPage = {
+    type: "SET_CURRENT_PAGE"
+    currentPage: number
+}
+
+type SetTotalUserCount = {
+    type: "SET_TOTAL_USERS_COUNT"
+    totalUsersCount: number
+}
+
 
 export type ActionTypes =
     AddPostActionType
@@ -42,6 +52,8 @@ export type ActionTypes =
     | FollowUserType
     | UnfollowUserType
     | SetUsersType
+    | SetCurrentPage
+    | SetTotalUserCount
 
 
 // export const store: StoreType = {
@@ -118,12 +130,12 @@ export type MessagesType = {
 export type UserType = {
     name: string
     id: number
-    uniqueUrlName: string|null,
+    uniqueUrlName: string | null,
     photos: {
-        small: string|null
-        large: string|null
+        small: string | null
+        large: string | null
     },
-    status: string|null
+    status: string | null
     "followed": boolean
 }
 
@@ -140,6 +152,9 @@ export type ProfilePageType = {
 
 export type UsersType = {
     users: Array<UserType>
+    pageSize: number
+    totalUserCount: number
+    currentPage: number
 }
 
 export type StateType = {
