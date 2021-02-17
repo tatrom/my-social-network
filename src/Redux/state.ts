@@ -48,6 +48,11 @@ type ToggleIsFetching = {
     isFetching: boolean
 }
 
+type SetUserProfile = {
+    type: "SET-USER-PROFILE"
+    profile: ProfileType
+}
+
 export type ActionTypes =
     AddPostActionType
     | ChangeNewTextActionType
@@ -59,6 +64,7 @@ export type ActionTypes =
     | SetCurrentPage
     | SetTotalUserCount
     | ToggleIsFetching
+    | SetUserProfile
 
 export type PostType = {
     id: number
@@ -95,9 +101,25 @@ export type DialogPageType = {
     newMessageBody: string
 }
 
+export type ProfileType = {
+    aboutMe: string
+    contacts: {
+        [key: string]: string
+    }
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
+    photos: {
+        small: string
+        large: string
+    }
+}
+
 export type ProfilePageType = {
     posts: Array<PostType>
     newText: string
+    profile: ProfileType | null
 }
 
 export type UsersType = {

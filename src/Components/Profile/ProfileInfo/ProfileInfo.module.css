@@ -1,3 +1,7 @@
 .description {
     padding: 20px;
 }
+
+.userImg > img {
+    width: 300px;
+}
