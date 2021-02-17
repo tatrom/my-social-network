@@ -38,7 +38,7 @@ export function Users(props: UsersType) {
                 <div>{u.followed ? <button onClick={() => props.unfollowUser(u.id)}>Unfollow</button> :
                     <button onClick={() => props.followUser(u.id)}>Follow</button>}</div>
                 <div>{u.status}</div>
-                <NavLink to={'/profile/'}>
+                <NavLink to={`/profile/${u.id}`}>
                     <img src={u.photos.small !== null ? u.photos.small : UserImg}/>
                 </NavLink>
             </div>)}

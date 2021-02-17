@@ -20,7 +20,7 @@ export function ProfileInfo(props: ProfileInfoPropsType) {
             </div>
 
             <div className={s.userImg}>
-                <img src={props.profile?.photos.large} alt="photo" width='100'/>
+                <img src={props.profile?.photos.large} width='100'/>
             </div>
             <div className={s.description}>ava + description</div>
         </div>

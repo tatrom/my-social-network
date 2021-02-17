@@ -18,7 +18,7 @@ function App() {
                 <div className={"App_content"}>
                     <Switch>
                         <Route path={"/"} exact render={() => <Redirect to={'/profile'}/>}/>
-                        <Route path="/profile" render={() => <ProfileContainer/>}/>
+                        <Route path="/profile/:userId?" render={() => <ProfileContainer />}/>
                         <Route path="/dialogs" render={() => <DialogsContainer/>}/>
                         <Route path="/news"/>
                         <Route path="/music"/>
