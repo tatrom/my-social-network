@@ -3,6 +3,7 @@ import {UserType} from "../../Redux/state";
 import s from './Users.module.css'
 import UserImg from '../../assets/images.jpeg'
 import {NavLink} from "react-router-dom";
+import {UsersApi} from "../../api/api";
 
 type UsersType = {
     users: Array<UserType>
@@ -28,15 +29,32 @@ export function Users(props: UsersType) {
     return <div>
         <div className={s.users}>
             {pages.map((p, id) => {
-                return <span key={id} className={props.currentPage === p ? `${s.pages}${s.selectedPage}` : s.pages}
+                return <span key={id} className={props.currentPage === p ? s.selectedPage : ""}
                              onClick={(e) => props.onPageChanged(p)
                              }>{p}/</span>
             })}
             {props.users.map((u, id) => <div key={id}>
                 <div>{u.name}</div>
                 <div>{u.status ? u.status : "I don't have a status"}</div>
-                <div>{u.followed ? <button onClick={() => props.unfollowUser(u.id)}>Unfollow</button> :
-                    <button onClick={() => props.followUser(u.id)}>Follow</button>}</div>
+                <div>{u.followed ?
+                    <button onClick={() => {
+                        UsersApi.unfollowUser(u.id).then(data => {
+                            if (data.resultCode === 0) {
+                                props.unfollowUser(u.id)
+                            }
+                        })
+                    }
+                    }>
+                        Unfollow
+                    </button> :
+                    <button onClick={() => {
+                        UsersApi.followUser(u.id).then(data => {
+                            if (data.resultCode === 0) {
+                                props.followUser(u.id)
+                            }
+                        })
+                        props.followUser(u.id)
+                    }}>Follow</button>}</div>
                 <div>{u.status}</div>
                 <NavLink to={`/profile/${u.id}`}>
                     <img src={u.photos.small !== null ? u.photos.small : UserImg}/>
