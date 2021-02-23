@@ -11,3 +11,15 @@
     margin: 20px 0 0 20px;
     border-radius: 30px;
 }
+
+.loginBlock {
+    float: right
+}
+
+.loginBlock > a {
+    color: #fff;
+}
+
+.loginBlock {
+    color: #fff;
+}

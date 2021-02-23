@@ -27,12 +27,12 @@ export function Users(props: UsersType) {
     }
     return <div>
         <div className={s.users}>
-            {pages.map(p => {
-                return <span className={props.currentPage === p ? `${s.pages}${s.selectedPage}` : s.pages}
+            {pages.map((p, id) => {
+                return <span key={id} className={props.currentPage === p ? `${s.pages}${s.selectedPage}` : s.pages}
                              onClick={(e) => props.onPageChanged(p)
                              }>{p}/</span>
             })}
-            {props.users.map(u => <div>
+            {props.users.map((u, id) => <div key={id}>
                 <div>{u.name}</div>
                 <div>{u.status ? u.status : "I don't have a status"}</div>
                 <div>{u.followed ? <button onClick={() => props.unfollowUser(u.id)}>Unfollow</button> :

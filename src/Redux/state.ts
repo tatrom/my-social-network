@@ -53,6 +53,18 @@ type SetUserProfile = {
     profile: ProfileType
 }
 
+export type AuthDataType = {
+    id: null | string,
+    login: null | string,
+    email: null | string,
+    isAuth: boolean
+}
+
+export type SetUserData = {
+    type: "SET_USER_DATA"
+    data: AuthDataType
+}
+
 export type ActionTypes =
     AddPostActionType
     | ChangeNewTextActionType
@@ -65,6 +77,7 @@ export type ActionTypes =
     | SetTotalUserCount
     | ToggleIsFetching
     | SetUserProfile
+    | SetUserData
 
 export type PostType = {
     id: number

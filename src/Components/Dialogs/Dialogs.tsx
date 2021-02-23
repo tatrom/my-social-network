@@ -12,8 +12,8 @@ type DialogsType = {
 }
 export const Dialogs = (props: DialogsType) => {
 
-    let dialogsElements = props.dialogPage.dialogs.map(dialog => <DialogItem name={dialog.name}/>);
-    let messageElements = props.dialogPage.messages.map(message => <Message message={message.message}/>);
+    let dialogsElements = props.dialogPage.dialogs.map((dialog, id) => <DialogItem key={id} name={dialog.name}/>);
+    let messageElements = props.dialogPage.messages.map((message, id) => <Message key={id} message={message.message}/>);
     let newMessageBody = props.dialogPage.newMessageBody;
 
     let onSendMessageClick = () => {
@@ -40,7 +40,7 @@ export const Dialogs = (props: DialogsType) => {
                     <div><textarea value={newMessageBody}
                                    placeholder='Enter your message'
                                    onChange={onNewMessageChange}
-                                   onKeyPress={e =>onKeyPressHandler(e)}
+                                   onKeyPress={e => onKeyPressHandler(e)}
                     /></div>
                     <div>
                         <button onClick={onSendMessageClick}>Send</button>

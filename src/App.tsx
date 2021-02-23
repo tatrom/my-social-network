@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import {Header} from "./Components/Header/Header";
 import {Navbar} from "./Components/Navbar/Navbar";
 import {HashRouter, Route, Switch, Redirect} from 'react-router-dom';
 import {DialogsContainer} from "./Components/Dialogs/DialogsContainer";
 import UserContainer from "./Components/Users/UsersContainer";
 import ProfileContainer from './Components/Profile/ProfileContainer';
+import HeaderContainer from './Components/Header/HeaderContainer';
 
 
 function App() {
@@ -13,12 +13,12 @@ function App() {
         <HashRouter>
             <div className="App">
 
-                <Header/>
+                <HeaderContainer/>
                 <Navbar/>
                 <div className={"App_content"}>
                     <Switch>
                         <Route path={"/"} exact render={() => <Redirect to={'/profile'}/>}/>
-                        <Route path="/profile/:userId?" render={() => <ProfileContainer />}/>
+                        <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
                         <Route path="/dialogs" render={() => <DialogsContainer/>}/>
                         <Route path="/news"/>
                         <Route path="/music"/>
