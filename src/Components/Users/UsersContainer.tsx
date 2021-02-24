@@ -7,7 +7,8 @@ import {
     setTotalUsersCount,
     setUsers,
     toggleIsFetching,
-    unFollowUser
+    unFollowUser,
+    toggleFollowingProgress
 } from "../../Redux/users-reducer";
 import axios from "axios";
 import {Users} from './UsersDump'
@@ -20,12 +21,14 @@ type UsersType = {
     totalUserCount: number,
     currentPage: number
     isFetching: boolean
+    toggleIsFollowing: Array<number>
     followUser: (id: number) => void
     unFollowUser: (id: number) => void
     setUsers: (users: Array<UserType>) => void
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
+    toggleFollowingProgress: (isFetching: boolean, id: number) => void
 }
 
 export class UsersContainer extends React.Component<UsersType> {
@@ -54,7 +57,10 @@ export class UsersContainer extends React.Component<UsersType> {
             <Users users={this.props.users} currentPage={this.props.currentPage} followUser={this.props.followUser}
                    onPageChanged={this.onPageChanged} pageSize={this.props.pageSize}
                    setCurrentPage={this.props.setCurrentPage} totalUserCount={this.props.totalUserCount}
-                   unfollowUser={this.props.unFollowUser}/>
+                   unfollowUser={this.props.unFollowUser}
+                   toggleFollowingProgress={this.props.toggleFollowingProgress}
+                   toggleIsFollowing={this.props.toggleIsFollowing}
+            />
         </>
     }
 }
@@ -65,7 +71,8 @@ let MapStateToProps = (state: StateType) => {
         pageSize: state.Users.pageSize,
         totalUserCount: state.Users.totalUserCount,
         currentPage: state.Users.currentPage,
-        isFetching: state.Users.isFetching
+        isFetching: state.Users.isFetching,
+        toggleIsFollowing: state.Users.toggleIsFollowing
 
     }
 }
@@ -77,5 +84,6 @@ export default connect(MapStateToProps, {
     setUsers,
     setCurrentPage,
     setTotalUsersCount,
-    toggleIsFetching
+    toggleIsFetching,
+    toggleFollowingProgress
 })(UsersContainer)

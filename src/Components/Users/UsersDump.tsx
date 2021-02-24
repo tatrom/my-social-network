@@ -7,13 +7,15 @@ import {UsersApi} from "../../api/api";
 
 type UsersType = {
     users: Array<UserType>
-    pageSize: number,
-    totalUserCount: number,
+    pageSize: number
+    totalUserCount: number
     currentPage: number
+    toggleIsFollowing: Array<number>
     followUser: (id: number) => void
     unfollowUser: (id: number) => void
     setCurrentPage: (currentPage: number) => void
     onPageChanged: (pageNumber: number) => void
+    toggleFollowingProgress: (isFetching: boolean, id: number) => void
 }
 
 
@@ -37,21 +39,26 @@ export function Users(props: UsersType) {
                 <div>{u.name}</div>
                 <div>{u.status ? u.status : "I don't have a status"}</div>
                 <div>{u.followed ?
-                    <button onClick={() => {
+                    <button disabled={props.toggleIsFollowing.some(id => u.id === id)} onClick={() => {
+                        props.toggleFollowingProgress(true, u.id)
                         UsersApi.unfollowUser(u.id).then(data => {
                             if (data.resultCode === 0) {
                                 props.unfollowUser(u.id)
                             }
+                            props.toggleFollowingProgress(false, u.id)
                         })
                     }
                     }>
                         Unfollow
                     </button> :
-                    <button onClick={() => {
+                    <button disabled={props.toggleIsFollowing.some(id => u.id === id)} onClick={() => {
+                        props.toggleFollowingProgress(true, u.id)
                         UsersApi.followUser(u.id).then(data => {
                             if (data.resultCode === 0) {
                                 props.followUser(u.id)
                             }
+                            props.toggleFollowingProgress(false, u.id)
+
                         })
                         props.followUser(u.id)
                     }}>Follow</button>}</div>

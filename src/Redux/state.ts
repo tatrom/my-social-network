@@ -65,6 +65,12 @@ export type SetUserData = {
     data: AuthDataType
 }
 
+export type toggleFollowingProgressType = {
+    type: "TOGGLE_IS_FOLLOWING_PROGRESS",
+    isFetching: boolean,
+    id: number
+}
+
 export type ActionTypes =
     AddPostActionType
     | ChangeNewTextActionType
@@ -78,6 +84,7 @@ export type ActionTypes =
     | ToggleIsFetching
     | SetUserProfile
     | SetUserData
+    | toggleFollowingProgressType
 
 export type PostType = {
     id: number
@@ -141,6 +148,7 @@ export type UsersType = {
     totalUserCount: number
     currentPage: number
     isFetching: boolean
+    toggleIsFollowing: Array<number>
 
 }
 
