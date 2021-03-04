@@ -1,19 +1,18 @@
-import React from 'react';
-import {sendMessageCreator, updateNewMessageBodyCreator} from "../../Redux/dialog-reducer";
+import {DialogReducerType, sendMessageCreator, updateNewMessageBodyCreator} from "../../Redux/dialog-reducer";
 import {Dialogs} from "./Dialogs";
-import StoreContext from "../../StoreContext";
 import {connect} from "react-redux";
-import {ActionTypes, StateType} from "../../Redux/state";
+import {RootStateType} from "../../Redux/redux-store";
 
 
 
-let MapStateToStore = (state: StateType) => {
+let MapStateToStore = (state: RootStateType) => {
     return {
-        dialogPage: state.DialogPage
+        dialogPage: state.DialogPage,
+        isAuth: state.Auth.isAuth
     }
 }
 
-let MapDispatchToProps = (dispatch: (action: ActionTypes) => void) => {
+let MapDispatchToProps = (dispatch: (action: DialogReducerType) => void) => {
     return {
         newMessageChange: (newMessage: string) => {
         dispatch(updateNewMessageBodyCreator(newMessage))

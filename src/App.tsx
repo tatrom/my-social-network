@@ -6,6 +6,7 @@ import {DialogsContainer} from "./Components/Dialogs/DialogsContainer";
 import UserContainer from "./Components/Users/UsersContainer";
 import ProfileContainer from './Components/Profile/ProfileContainer';
 import HeaderContainer from './Components/Header/HeaderContainer';
+import Login from "./Components/Login/Login";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                         <Route path="/music"/>
                         <Route path="/settings"/>
                         <Route path="/users" render={() => <UserContainer/>}/>
+                        <Route path="/login" render={() => <Login/>}/>
                     </Switch>
                 </div>
             </div>

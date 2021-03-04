@@ -2,10 +2,12 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from './Dialogs.module.css'
 import {DialogItem} from './DialogsItem/DialogsItem';
 import {Message} from "./Message/Message";
-import {DialogPageType} from "../../Redux/state";
+import {DialogPageType} from "../../Redux/dialog-reducer";
+import {Redirect} from "react-router-dom";
 
 
 type DialogsType = {
+    isAuth: boolean
     dialogPage: DialogPageType
     sendMessage: () => void
     newMessageChange: (newMessage: string) => void
@@ -29,6 +31,10 @@ export const Dialogs = (props: DialogsType) => {
         if (e.key === "Enter")
             props.sendMessage()
     }
+    if (!props.isAuth) {
+        return <Redirect to={'/login'}/>
+    }
+
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>

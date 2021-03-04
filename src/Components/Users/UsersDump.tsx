@@ -1,9 +1,9 @@
 import React from "react";
-import {UserType} from "../../Redux/state";
 import s from './Users.module.css'
 import UserImg from '../../assets/images.jpeg'
 import {NavLink} from "react-router-dom";
 import {UsersApi} from "../../api/api";
+import {UserType} from "../../Redux/users-reducer";
 
 type UsersType = {
     users: Array<UserType>
@@ -40,26 +40,13 @@ export function Users(props: UsersType) {
                 <div>{u.status ? u.status : "I don't have a status"}</div>
                 <div>{u.followed ?
                     <button disabled={props.toggleIsFollowing.some(id => u.id === id)} onClick={() => {
-                        props.toggleFollowingProgress(true, u.id)
-                        UsersApi.unfollowUser(u.id).then(data => {
-                            if (data.resultCode === 0) {
-                                props.unfollowUser(u.id)
-                            }
-                            props.toggleFollowingProgress(false, u.id)
-                        })
+                        props.unfollowUser(u.id)
                     }
                     }>
                         Unfollow
                     </button> :
                     <button disabled={props.toggleIsFollowing.some(id => u.id === id)} onClick={() => {
-                        props.toggleFollowingProgress(true, u.id)
-                        UsersApi.followUser(u.id).then(data => {
-                            if (data.resultCode === 0) {
-                                props.followUser(u.id)
-                            }
-                            props.toggleFollowingProgress(false, u.id)
-
-                        })
+                        props.followUser(id)
                         props.followUser(u.id)
                     }}>Follow</button>}</div>
                 <div>{u.status}</div>
