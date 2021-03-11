@@ -65,4 +65,4 @@ export default compose<ComponentType>(connect(mapStateToProps, {
     getUserProfile,
     SetStatus,
     UpdateStatus
-}), WithAuthRedirect, withRouter)(ProfileContainer)
+}), withRouter)(ProfileContainer)
