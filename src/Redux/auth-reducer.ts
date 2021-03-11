@@ -42,7 +42,7 @@ export const setAuthUserData = (userId: string, login: string, email: string, is
 export const getUserProfile = (userId: string) => {
     return (dispatch: (action: ProfileReducerType) => void) => {
         AuthApi.setProfile(userId).then(response => {
-            dispatch(setUserProfile(response))
+            dispatch(setUserProfile(response.data))
         })
     }
 }

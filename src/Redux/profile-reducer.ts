@@ -1,3 +1,6 @@
+import {Dispatch} from "redux";
+import {profileApi} from "../api/api";
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET-USER-PROFILE"
@@ -27,6 +30,7 @@ export type ProfilePageType = {
     posts: Array<PostType>
     newText: string
     profile: ProfileType | null
+    status: string
 }
 
 let initialState = {
@@ -38,7 +42,8 @@ let initialState = {
         {id: 5, message: "Its a fifth post", likes: 3},
     ],
     newText: "",
-    profile: null
+    profile: null,
+    status: ''
 }
 
 const profileReducer = (state: ProfilePageType = initialState, action: ProfileReducerType): ProfilePageType => {
@@ -61,6 +66,8 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileRe
             return {...state};
         case SET_USER_PROFILE:
             return {...state, profile: action.profile,}
+        case 'SET-STATUS':
+            return {...state, status: action.status}
         default:
             return state;
     }
@@ -78,7 +85,9 @@ type SetUserProfile = {
     profile: ProfileType
 }
 
-export type ProfileReducerType = AddPostActionType | ChangeNewTextActionType | SetUserProfile
+type GetStatusType = ReturnType<typeof setStatus>
+
+export type ProfileReducerType = AddPostActionType | ChangeNewTextActionType | SetUserProfile | GetStatusType
 
 export const addPost = (): AddPostActionType => ({type: ADD_POST})
 export const updateNewPostText = (newText: string): ChangeNewTextActionType => ({
@@ -89,5 +98,21 @@ export const setUserProfile = (profile: ProfileType): SetUserProfile => ({
     type: SET_USER_PROFILE,
     profile
 })
+export const setStatus = (status: string) => ({type: 'SET-STATUS', status} as const)
+
+export const SetStatus = (userId: string) => (dispatch: Dispatch) => {
+    profileApi.setStatus(userId).then(response => {
+        dispatch(setStatus(response.data))
+    })
+}
+
+export const UpdateStatus = (title: string) => (dispatch: Dispatch) => {
+    profileApi.updateStatus(title).then(response => {
+        if (response.data.resultCode === 0) {
+            debugger;
+            dispatch(setStatus(title))
+        }
+    })
+}
 
 export default profileReducer

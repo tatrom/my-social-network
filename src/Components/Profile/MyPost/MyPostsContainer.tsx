@@ -2,6 +2,7 @@ import {addPost, ProfileReducerType, updateNewPostText} from "../../../Redux/pro
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
 import {RootStateType} from "../../../Redux/redux-store";
+import {WithAuthRedirect} from "../../../hoc/WithAuthRedirect";
 
 
 let MapStateToStore = (state: RootStateType) => {

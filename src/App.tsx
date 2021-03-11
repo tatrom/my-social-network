@@ -2,12 +2,11 @@ import React from 'react';
 import './App.css';
 import {Navbar} from "./Components/Navbar/Navbar";
 import {HashRouter, Route, Switch, Redirect} from 'react-router-dom';
-import {DialogsContainer} from "./Components/Dialogs/DialogsContainer";
+import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 import UserContainer from "./Components/Users/UsersContainer";
 import ProfileContainer from './Components/Profile/ProfileContainer';
 import HeaderContainer from './Components/Header/HeaderContainer';
 import Login from "./Components/Login/Login";
-
 
 function App() {
     return (
