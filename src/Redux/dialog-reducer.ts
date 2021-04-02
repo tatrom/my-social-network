@@ -15,7 +15,6 @@ export type MessagesType = {
 export type DialogPageType = {
     messages: Array<MessagesType>
     dialogs: Array<DialogsType>
-    newMessageBody: string
 }
 
 let initialState = {
@@ -31,23 +30,15 @@ let initialState = {
         {id: 1, name: "Renat"},
         {id: 1, name: "Anatoly"}
     ],
-    newMessageBody: ""
 }
 
 export const dialogReducer = (state: DialogPageType = initialState, action: DialogReducerType): DialogPageType => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_BODY: {
-            const stateCopy = {...state}
-            stateCopy.newMessageBody = action.body;
-            debugger;
-            return stateCopy;
-        }
+
         case SEND_MESSAGE: {
-            let body = state.newMessageBody.trim();
             const stateCopy = {...state, messages: [...state.messages]}
-            if (body) {
-                stateCopy.newMessageBody = '';
-                stateCopy.messages.push({id: 6, message: body})
+            if (action.message) {
+                stateCopy.messages.push({id: 6, message: action.message})
             }
             return {...stateCopy}
         }
@@ -62,6 +53,7 @@ export type DialogReducerType = SendMessageType | UpdateNewMessageBodyType
 
 type SendMessageType = {
     type: "SEND-MESSAGE"
+    message: string
 }
 
 type UpdateNewMessageBodyType = {
@@ -70,7 +62,7 @@ type UpdateNewMessageBodyType = {
 }
 
 
-export const sendMessageCreator = (): SendMessageType => ({type: SEND_MESSAGE})
+export const SendMessageAC = (message: string): SendMessageType => ({type: SEND_MESSAGE, message})
 export const updateNewMessageBodyCreator = (text: string): UpdateNewMessageBodyType => ({
     type: UPDATE_NEW_MESSAGE_BODY,
     body: text

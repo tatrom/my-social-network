@@ -69,4 +69,4 @@ export default compose<ComponentType>(connect(MapStateToProps, {
     setCurrentPage,
     toggleFollowingProgress,
     getUsers
-}), WithAuthRedirect)(UsersContainer)
+}),WithAuthRedirect)(UsersContainer)

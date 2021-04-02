@@ -35,12 +35,19 @@ export const profileApi = {
         return instance.put(`/profile/status`, {status})
     }
 }
-export const AuthApi = {
+export const authApi = {
     setProfile(userId: string) {
         console.warn('Obsolete method. Use profileApi object')
         return profileApi.getProfile(userId)
     },
     me() {
         return instance.get(`/auth/me`)
-    }
+    },
+    login(email: string, password: string, rememberMe: boolean) {
+        return instance.post('/auth/login', {email, password, rememberMe}
+        )
+    },
+    logout() {
+        return instance.delete('/auth/login')
+    },
 }

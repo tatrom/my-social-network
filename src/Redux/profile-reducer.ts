@@ -28,7 +28,6 @@ export type ProfileType = {
 
 export type ProfilePageType = {
     posts: Array<PostType>
-    newText: string
     profile: ProfileType | null
     status: string
 }
@@ -41,7 +40,6 @@ let initialState = {
         {id: 4, message: "Its a fourth post", likes: 3},
         {id: 5, message: "Its a fifth post", likes: 3},
     ],
-    newText: "",
     profile: null,
     status: ''
 }
@@ -49,7 +47,7 @@ let initialState = {
 const profileReducer = (state: ProfilePageType = initialState, action: ProfileReducerType): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
-            let text = state.newText.trim()
+            let text = action.postText.trim()
             const stateCopy = {...state, posts: [...state.posts]}
             if (text) {
                 let newPost: PostType = {
@@ -58,12 +56,8 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileRe
                     likes: 5
                 }
                 stateCopy.posts.push(newPost)
-                stateCopy.newText = ''
             }
             return stateCopy
-        case UPDATE_NEW_POST_TEXT:
-            state.newText = action.newText;
-            return {...state};
         case SET_USER_PROFILE:
             return {...state, profile: action.profile,}
         case 'SET-STATUS':
@@ -75,6 +69,7 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileRe
 
 type AddPostActionType = {
     type: "ADD-POST"
+    postText: string
 }
 type ChangeNewTextActionType = {
     type: "UPDATE-NEW-POST-TEXT",
@@ -89,7 +84,7 @@ type GetStatusType = ReturnType<typeof setStatus>
 
 export type ProfileReducerType = AddPostActionType | ChangeNewTextActionType | SetUserProfile | GetStatusType
 
-export const addPost = (): AddPostActionType => ({type: ADD_POST})
+export const addPost = (postText: string): AddPostActionType => ({type: ADD_POST, postText})
 export const updateNewPostText = (newText: string): ChangeNewTextActionType => ({
     type: UPDATE_NEW_POST_TEXT,
     newText: newText
