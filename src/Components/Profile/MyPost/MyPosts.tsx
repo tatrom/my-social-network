@@ -21,13 +21,14 @@ type FormDataType = {
 }
 
 const maxLength10 = maxLengthCreator(10)
-export const MyPosts = (props: MyPostType) => {
+
+export const MyPosts = React.memo((props: MyPostType) => {
+
     let posts = props.posts.map((el, id) => <Post key={id} id={el.id} message={el.message} likes={el.likes}/>)
 
     function addPost(postText: FormDataType) {
         props.addPost(postText.newPostBody)
     }
-
 
     return (<>
             <AddPostReduxForm onSubmit={addPost}/>
@@ -36,7 +37,7 @@ export const MyPosts = (props: MyPostType) => {
             </div>
         </>
     )
-}
+})
 
 const AddPostForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (

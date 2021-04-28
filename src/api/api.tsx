@@ -16,11 +16,9 @@ export const UsersApi = {
     },
     followUser(userId: number) {
         return instance.post(`/follow/${userId}`)
-            .then(response => response.data)
     },
     unfollowUser(userId: number) {
         return instance.delete(`/follow/${userId}`)
-            .then(response => response.data)
     },
 }
 
@@ -33,7 +31,8 @@ export const profileApi = {
     },
     updateStatus(status: string) {
         return instance.put(`/profile/status`, {status})
-    }
+    },
+
 }
 export const authApi = {
     setProfile(userId: string) {

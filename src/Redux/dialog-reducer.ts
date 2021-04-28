@@ -1,22 +1,7 @@
 const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY";
 const SEND_MESSAGE = "SEND-MESSAGE";
 
-export type DialogsType = {
-    id: number
-    name: string
-}
-
-export type MessagesType = {
-    id: number
-    message: string
-
-}
-
-export type DialogPageType = {
-    messages: Array<MessagesType>
-    dialogs: Array<DialogsType>
-}
-
+//initial state
 let initialState = {
     messages: [
         {id: 1, message: "Hello, i'm first message"},
@@ -32,6 +17,7 @@ let initialState = {
     ],
 }
 
+//reducer
 export const dialogReducer = (state: DialogPageType = initialState, action: DialogReducerType): DialogPageType => {
     switch (action.type) {
 
@@ -48,24 +34,28 @@ export const dialogReducer = (state: DialogPageType = initialState, action: Dial
     }
 }
 
+//types
+export type DialogsType = {
+    id: number
+    name: string
+}
+export type MessagesType = {
+    id: number
+    message: string
+
+}
+export type DialogPageType = {
+    messages: Array<MessagesType>
+    dialogs: Array<DialogsType>
+}
+
+type SendMessageType = ReturnType<typeof SendMessageAC>
+type UpdateNewMessageBodyType = ReturnType<typeof updateNewMessageBodyCreator>
 export type DialogReducerType = SendMessageType | UpdateNewMessageBodyType
 
 
-type SendMessageType = {
-    type: "SEND-MESSAGE"
-    message: string
-}
-
-type UpdateNewMessageBodyType = {
-    type: "UPDATE-NEW-MESSAGE-BODY",
-    body: string
-}
-
-
-export const SendMessageAC = (message: string): SendMessageType => ({type: SEND_MESSAGE, message})
-export const updateNewMessageBodyCreator = (text: string): UpdateNewMessageBodyType => ({
-    type: UPDATE_NEW_MESSAGE_BODY,
-    body: text
-})
+//action creators
+export const SendMessageAC = (message: string) => ({type: SEND_MESSAGE, message} as const )
+export const updateNewMessageBodyCreator = (text: string) => ({type: UPDATE_NEW_MESSAGE_BODY, body: text} as const )
 
 export default dialogReducer
