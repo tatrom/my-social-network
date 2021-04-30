@@ -5,7 +5,6 @@ import {RootStateType} from "../../Redux/redux-store";
 import {ProfileType, SetStatus, setUserProfile, UpdateStatus} from "../../Redux/profile-reducer";
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {getUserProfile} from "../../Redux/auth-reducer";
-import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
 
 type MapStatePropsType = {
