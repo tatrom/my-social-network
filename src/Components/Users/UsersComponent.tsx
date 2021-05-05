@@ -22,8 +22,8 @@ export function Users(props: UsersType) {
 
     return <div>
         <div className={s.users}>
-            <Pagination currentPage={props.currentPage} onPageChanged={props.onPageChanged} pageSize={props.pageSize}
-                        totalUserCount={props.totalUserCount}/>
+            <Pagination currentPage={props.currentPage} onPageChanged={props.onPageChanged} portionSize={props.pageSize}
+                        totalItemsCount={props.totalUserCount}/>
             {props.users.map((u) => <User key={u.id} user={u} unfollowUser={props.unfollowUser}
                                           followUser={props.followUser}
                                           toggleIsFollowing={props.toggleIsFollowing}/>)}

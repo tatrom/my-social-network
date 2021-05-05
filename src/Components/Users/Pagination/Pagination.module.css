@@ -1,0 +1,11 @@
+.currentPage {
+    font-weight: bold;
+}
+
+.page {
+    cursor: pointer;
+}
+
+.page:hover {
+    opacity: .5;
+}
