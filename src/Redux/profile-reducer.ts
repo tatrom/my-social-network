@@ -36,6 +36,11 @@ const profileReducer = (state: ProfilePageType = initialState, action: ProfileRe
             return {...state, status: action.status}
         case 'DELETE_POST':
             return {...state, posts: state.posts.filter(post => post.id !== action.postId)}
+        case 'SET_PHOTOS_SUCCESS':
+            if (state.profile) {
+                return {...state, profile: {...state.profile, photos: action.photos}}
+            }
+            return {...state}
         default:
             return state;
     }
@@ -71,6 +76,7 @@ type ChangeNewTextActionType = ReturnType<typeof updateNewPostText>
 type SetUserProfileType = ReturnType<typeof setUserProfile>
 type DeletePostType = ReturnType<typeof deletePost>
 type GetStatusType = ReturnType<typeof setStatus>
+type SetPhotoSuccessType = ReturnType<typeof setPhotoSuccess>
 
 export type ProfileReducerType =
     AddPostActionType
@@ -78,6 +84,7 @@ export type ProfileReducerType =
     | SetUserProfileType
     | GetStatusType
     | DeletePostType
+    | SetPhotoSuccessType
 
 // action creators
 export const addPost = (postText: string) => ({type: 'ADD-POST', postText} as const)
@@ -85,6 +92,10 @@ export const updateNewPostText = (newText: string) => ({type: "UPDATE-NEW-POST-T
 export const setUserProfile = (profile: ProfileType) => ({type: "SET-USER-PROFILE", profile} as const)
 export const setStatus = (status: string) => ({type: 'SET-STATUS', status} as const)
 export const deletePost = (postId: number) => ({type: 'DELETE_POST', postId} as const)
+export const setPhotoSuccess = (photos: { small: string, large: string }) => ({
+    type: 'SET_PHOTOS_SUCCESS',
+    photos
+} as const)
 
 //thunks
 export const SetStatus = (userId: string) => async (dispatch: Dispatch) => {
@@ -96,6 +107,13 @@ export const UpdateStatus = (title: string) => async (dispatch: Dispatch) => {
     if (response.data.resultCode === 0) {
         debugger;
         dispatch(setStatus(title))
+    }
+}
+
+export const setPhoto = (file: File) => async (dispatch: Dispatch) => {
+    const response = await profileApi.setPhoto(file)
+    if (response.data.resultCode === 0) {
+        dispatch(setPhotoSuccess(response.data.data.photos))
     }
 }
 

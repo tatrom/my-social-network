@@ -5,3 +5,7 @@
 .userImg > img {
     width: 300px;
 }
+
+.mainPhoto {
+    max-width: 150px;
+}
