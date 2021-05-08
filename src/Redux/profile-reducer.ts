@@ -1,5 +1,9 @@
 import {Dispatch} from "redux";
 import {profileApi} from "../api/api";
+import {ThunkAction} from "redux-thunk";
+import {RootStateType} from "./redux-store";
+import {getUserProfile} from "./auth-reducer";
+import {FormAction, stopSubmit} from "redux-form";
 
 
 //initial state
@@ -86,6 +90,8 @@ export type ProfileReducerType =
     | DeletePostType
     | SetPhotoSuccessType
 
+type ThunkType = ThunkAction<Promise<void>, RootStateType, unknown, ProfileReducerType | FormAction>
+
 // action creators
 export const addPost = (postText: string) => ({type: 'ADD-POST', postText} as const)
 export const updateNewPostText = (newText: string) => ({type: "UPDATE-NEW-POST-TEXT", newText: newText} as const)
@@ -117,4 +123,17 @@ export const setPhoto = (file: File) => async (dispatch: Dispatch) => {
     }
 }
 
+export const saveProfile = (profile: ProfileType): ThunkType => async (dispatch, getState) => {
+    const userId = getState().Auth.userId
+    const response = await profileApi.saveProfile(profile)
+    if (response.data.resultCode === 0) {
+        userId && dispatch(getUserProfile(userId))
+    } else {
+        // let errorMessage = response.data.messages[0].split('->')
+        let finalErrorMessage = response.data.messages[0].split('->')[1].split(')')[0]
+        finalErrorMessage = finalErrorMessage === 'MainLink' ? 'mainLink' : finalErrorMessage.toLowerCase()
+        dispatch(stopSubmit('edit-profile', {"contacts": {[finalErrorMessage]: response.data.messages[0]}}))
+        return Promise.reject(response.data.messages[0])
+    }
+}
 export default profileReducer

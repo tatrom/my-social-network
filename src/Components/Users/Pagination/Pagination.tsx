@@ -34,7 +34,7 @@ export const Pagination: React.FC<PaginationPropsType> = ({
             {portionNumber > 1 && <button onClick={() => setPortionNumber(portionNumber - 1)}>PREVIOUS</button>}
             {pages.filter(p => p > leftPortionNumber && p <= rightPortionNumber)
                 .map(p => {
-                    return <span onClick={() => setPage(p)}
+                    return <span key={p} onClick={() => setPage(p)}
                                  className={currentPage === p ? `${s.page} ${s.currentPage}` : s.page}> {p}</span>
                 })
             }
